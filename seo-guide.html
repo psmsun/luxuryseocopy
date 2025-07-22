@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive SEO Guide for Luxury Copywriters</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Gilded Parchment -->
+    <!-- Application Structure Plan: The SPA is designed as an interactive "Digital Guidebook" with a fixed sidebar for navigation. The content is architected into logical chapters for a copywriter's workflow: Foundation, Narrative, Voice, and Technical Handshake. This task-oriented structure is more intuitive than a simple glossary. Key interactions include toggleable examples, live character counters with multi-stage feedback, an impact chart, and an interactive checklist. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: H1, Metas, Rich Snippets, Open Graph -> Goal: Inform & Demonstrate -> Viz: Interactive Cards with Toggles/Examples -> Interaction: User clicks to switch examples or view structured content -> Justification: Active participation is more memorable than passive reading. -> Method: HTML/CSS/JS.
+        - Report Info: Meta Title/Description Lengths -> Goal: Provide a practical tool -> Viz: Input fields with live character counters and multi-stage dynamic border colors (yellow for too short, green for good, red for limit) -> Interaction: User types and sees count/colors update in real-time -> Justification: Provides nuanced, actionable feedback on copy length. -> Method: HTML/JS.
+        - Report Info: Relative importance of SEO elements -> Goal: Compare -> Viz: Horizontal Bar Chart -> Interaction: Hover for tooltips -> Justification: A visual hierarchy is quicker to understand. -> Library: Chart.js.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #FDFBF6;
+            color: #4C4646;
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .accent-gold { color: #B4A284; }
+        .bg-accent-gold { background-color: #B4A284; }
+        .border-accent-gold { border-color: #B4A284; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FDFBF6; }
+        ::-webkit-scrollbar-thumb { background: #d1c7b6; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #B4A284; }
+        .nav-link.active {
+            background-color: #B4A284;
+            color: #FDFBF6;
+            font-weight: 600;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-[#F5F1EA] p-6 hidden lg:block fixed h-full">
+            <div class="flex items-center mb-2">
+                <div class="w-10 h-10 bg-accent-gold rounded-full flex items-center justify-center mr-3">
+                    <span class="text-white font-bold text-xl font-display">G</span>
+                </div>
+                <h1 class="text-2xl font-bold font-display text-gray-800">Guidebook</h1>
+            </div>
+            <p class="text-sm text-gray-500 mt-1 mb-8 ml-12">SEO for Luxury Copywriters</p>
+            <nav>
+                <ul class="space-y-2" id="desktop-nav">
+                    <li><a href="#foundation" class="nav-link block p-3 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors duration-200">The Foundation</a></li>
+                    <li><a href="#narrative" class="nav-link block p-3 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors duration-200">Structuring the Narrative</a></li>
+                    <li><a href="#voice" class="nav-link block p-3 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors duration-200">Mastering the Voice</a></li>
+                    <li><a href="#handshake" class="nav-link block p-3 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors duration-200">The Technical Handshake</a></li>
+                    <li><a href="#impact" class="nav-link block p-3 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors duration-200">Visualizing Impact</a></li>
+                    <li><a href="#checklist" class="nav-link block p-3 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors duration-200">Final Checklist</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 lg:ml-64">
+            <div class="p-4 sm:p-8 md:p-12">
+                
+                <!-- Mobile Navigation -->
+                <div class="lg:hidden mb-6">
+                    <select id="mobile-nav" class="w-full p-3 border border-gray-300 rounded-lg bg-white shadow-sm">
+                        <option value="foundation">The Foundation</option>
+                        <option value="narrative">Structuring the Narrative</option>
+                        <option value="voice">Mastering the Voice</option>
+                        <option value="handshake">The Technical Handshake</option>
+                        <option value="impact">Visualizing Impact</option>
+                        <option value="checklist">Final Checklist</option>
+                    </select>
+                </div>
+
+                <!-- Section: The Foundation -->
+                <section id="foundation" class="content-section">
+                    <h2 class="text-4xl font-bold font-display border-b-2 border-accent-gold pb-2 mb-4">The Foundation</h2>
+                    <p class="text-lg text-gray-600 mb-8">These are the core elements you will work with on every page. Mastering them is the first step to creating copy that is both alluring for guests and visible to search engines.</p>
+                    
+                    <div class="space-y-8">
+                        <!-- H1 Tag Card -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-2xl font-bold font-display mb-3">The H1 Tag: The Page Headline</h3>
+                            <p class="mb-4"><strong class="accent-gold">What it is:</strong> The single, main title of the page. It's the most important heading and there must be only ONE per page.</p>
+                            <p class="mb-4"><strong class="accent-gold">Your Task:</strong> Craft a compelling H1 that acts as the page's headline and includes the primary topic (keyword) for that page.</p>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-bold mb-2">Example:</h4>
+                                <div class="p-3 border-l-4 border-red-400 bg-red-50 example-h1 weak">
+                                    <p class="font-semibold text-red-800">Weak H1:</p>
+                                    <p class="text-red-700 italic">Welcome</p>
+                                </div>
+                                <div class="p-3 border-l-4 border-green-400 bg-green-50 example-h1 strong hidden">
+                                    <p class="font-semibold text-green-800">Strong H1:</p>
+                                    <p class="text-green-700 italic">A 5-Star Luxury Castle Hotel & Spa in the Irish Countryside</p>
+                                </div>
+                                <button class="toggle-button mt-3 text-sm bg-accent-gold text-white py-1 px-3 rounded-full" data-target="h1">Show Strong Example</button>
+                            </div>
+                        </div>
+
+                        <!-- Meta Title Card -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-2xl font-bold font-display mb-3">Meta Title: The Google Headline</h3>
+                            <p class="mb-4"><strong class="accent-gold">What it is:</strong> The blue, clickable headline that appears in a Google search result. It's your digital 'shop window'.</p>
+                            <p class="mb-4"><strong class="accent-gold">Your Task:</strong> Write a unique title for every page, between 30 and 60 characters. It must include the main keyword and your hotel's name.</p>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-bold mb-2">Practice Tool:</h4>
+                                <input type="text" id="meta-title-input" class="w-full p-2 border-2 border-gray-300 rounded-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-accent-gold/50" placeholder="Type a meta title here..." maxlength="60">
+                                <div class="flex justify-between items-center mt-1">
+                                    <p class="text-xs text-gray-500" id="title-feedback-text"></p>
+                                    <p class="text-right text-sm" id="meta-title-counter">0 / 60</p>
+                                </div>
+                                <div class="mt-2 p-3 border-l-4 border-green-400 bg-green-50">
+                                    <p class="font-semibold text-green-800">Strong Example:</p>
+                                    <p class="text-green-700 italic">Award-Winning Luxury Spa & Wellness Retreat | The Gilded Manor</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Meta Description Card -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-2xl font-bold font-display mb-3">Meta Description: The Google Summary</h3>
+                            <p class="mb-4"><strong class="accent-gold">What it is:</strong> The short paragraph of text underneath the blue link in a search result. It entices the user to click.</p>
+                            <p class="mb-4"><strong class="accent-gold">Your Task:</strong> Write a captivating summary of the page, between 80 and 155 characters.</p>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-bold mb-2">Practice Tool:</h4>
+                                <textarea id="meta-desc-input" class="w-full p-2 border-2 border-gray-300 rounded-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-accent-gold/50" placeholder="Type a meta description here..." maxlength="155" rows="3"></textarea>
+                                <div class="flex justify-between items-center mt-1">
+                                    <p class="text-xs text-gray-500" id="desc-feedback-text"></p>
+                                    <p class="text-right text-sm" id="meta-desc-counter">0 / 155</p>
+                                </div>
+                                <div class="mt-2 p-3 border-l-4 border-green-400 bg-green-50">
+                                    <p class="font-semibold text-green-800">Strong Example:</p>
+                                    <p class="text-green-700 italic">Indulge your senses at our serene wellness spa. Discover bespoke treatments, a thermal suite, and hydrotherapy pools. Book your journey to tranquility.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Open Graph Image Card -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-2xl font-bold font-display mb-3">Open Graph Image: The Social Thumbnail</h3>
+                            <p class="mb-4"><strong class="accent-gold">What it is:</strong> The specific image that appears when your page is shared on social media (Facebook, X, LinkedIn). It works with your Meta Title to grab attention.</p>
+                            <p class="mb-4"><strong class="accent-gold">Your Role:</strong> While you don't code this, you should recommend the most compelling, on-brand image for each page. The image is a powerful piece of visual copywriting.</p>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-bold mb-2">Visual Example (How it appears on social media):</h4>
+                                <div class="max-w-md mx-auto border border-gray-300 rounded-lg overflow-hidden bg-white">
+                                    <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                                        <p class="text-gray-500">Compelling Image (1200x630px)</p>
+                                    </div>
+                                    <div class="p-3 bg-gray-100">
+                                        <p class="text-xs text-gray-500 uppercase">yourwebsite.com</p>
+                                        <p class="font-semibold text-gray-800">Award-Winning Luxury Spa & Wellness Retreat...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Structuring the Narrative -->
+                <section id="narrative" class="content-section hidden">
+                    <h2 class="text-4xl font-bold font-display border-b-2 border-accent-gold pb-2 mb-4">Structuring the Narrative</h2>
+                    <p class="text-lg text-gray-600 mb-8">Once the foundation is set, you must structure the content on the page. This creates a logical flow for the reader and helps search engines understand the hierarchy of your information.</p>
+                    
+                    <div class="space-y-8">
+                        <!-- H2 & H3 Tags Card -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-2xl font-bold font-display mb-3">H2 & H3 Tags: The Story's Chapters</h3>
+                            <p class="mb-4"><strong class="accent-gold">What they are:</strong> The subheadings of your page. They break up content, making it scannable and easy to digest, like chapters in a book.</p>
+                            <p class="mb-4"><strong class="accent-gold">Your Task:</strong> Use H2 tags for the main sections of your page. Use H3s for finer details under an H2. This creates a clear, logical structure.</p>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-bold mb-2">Example Structure:</h4>
+                                <div class="p-3 border-l-4 border-gray-400 bg-gray-100">
+                                    <p class="font-semibold text-gray-800">H2: Explore Our Bespoke Suites & Rooms</p>
+                                    <ul class="list-disc list-inside ml-4 mt-2 text-gray-700">
+                                        <li>H3: The Presidential Suite</li>
+                                        <li>H3: Ocean View Junior Suites</li>
+                                        <li>H3: Classic Manor Rooms</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Image Alt Text Card -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-2xl font-bold font-display mb-3">Image Alt Text: Describing the View</h3>
+                            <p class="mb-4"><strong class="accent-gold">What it is:</strong> A short, written description of an image. It's vital for accessibility (for screen readers) and helps search engines "see" and index your images.</p>
+                            <p class="mb-4"><strong class="accent-gold">Your Task:</strong> For every important image, write a concise, descriptive phrase. Think: "How would I describe this photo over the phone?"</p>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-bold mb-2">Example:</h4>
+                                <div class="p-3 border-l-4 border-red-400 bg-red-50 example-alt weak">
+                                    <p class="font-semibold text-red-800">Weak Alt Text:</p>
+                                    <p class="text-red-700 italic">pool.jpg</p>
+                                </div>
+                                <div class="p-3 border-l-4 border-green-400 bg-green-50 example-alt strong hidden">
+                                    <p class="font-semibold text-green-800">Strong Alt Text:</p>
+                                    <p class="text-green-700 italic">Couple relaxing by the infinity pool overlooking the Atlantic Ocean at sunset.</p>
+                                </div>
+                                <button class="toggle-button mt-3 text-sm bg-accent-gold text-white py-1 px-3 rounded-full" data-target="alt">Show Strong Example</button>
+                            </div>
+                        </div>
+
+                        <!-- Internal Linking Card -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-2xl font-bold font-display mb-3">Internal Linking: The Website Concierge</h3>
+                            <p class="mb-4"><strong class="accent-gold">What it is:</strong> Simply linking from one page on our website to another relevant page on our website. It guides users and search engines through your site.</p>
+                             <p class="mb-4"><strong class="accent-gold">Your Task:</strong> As you write, when you mention another amenity (like the spa or restaurant), link to that page using descriptive text (called "anchor text").</p>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-bold mb-2">Visual Example:</h4>
+                                <div class="flex justify-around items-center h-32">
+                                    <div class="text-center">
+                                        <div class="p-2 border-2 border-accent-gold rounded-md bg-white">Homepage</div>
+                                    </div>
+                                    <div class="w-1/4 border-t-2 border-dashed border-accent-gold"></div>
+                                    <div class="text-center">
+                                        <div class="p-2 border-2 border-accent-gold rounded-md bg-white">Dining Page</div>
+                                    </div>
+                                    <div class="w-1/4 border-t-2 border-dashed border-accent-gold"></div>
+                                    <div class="text-center">
+                                        <div class="p-2 border-2 border-accent-gold rounded-md bg-white">Spa Page</div>
+                                    </div>
+                                </div>
+                                <p class="text-center text-sm text-gray-600 mt-2">Links create a web, connecting your content and distributing value.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Mastering the Voice -->
+                <section id="voice" class="content-section hidden">
+                    <h2 class="text-4xl font-bold font-display border-b-2 border-accent-gold pb-2 mb-4">Mastering the Voice</h2>
+                    <p class="text-lg text-gray-600 mb-8">This is where art meets science. Your tone defines the brand, while understanding user intent and content structure ensures your beautiful words reach the right audience at the right time.</p>
+
+                    <div class="space-y-8">
+                        <!-- Tone & Style Card -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-2xl font-bold font-display mb-3">Tone & Style: Our Brand Voice</h3>
+                            <p class="mb-4"><strong class="accent-gold">What it is:</strong> The personality and emotion of our brand, expressed through your words. For luxury, this is paramount: elegant, calm, and refined.</p>
+                            <p class="mb-4"><strong class="accent-gold">Your Task:</strong> Emphasize exclusivity, privacy, and comfort. Use emotionally evocative language that appeals to the senses and the desire for escape.</p>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div class="p-3 border-l-4 border-red-400 bg-red-50">
+                                        <p class="font-semibold text-red-800">Standard Copy:</p>
+                                        <p class="text-red-700 italic">The hotel is by the sea. Our hotel is nice and quiet.</p>
+                                    </div>
+                                    <div class="p-3 border-l-4 border-green-400 bg-green-50">
+                                        <p class="font-semibold text-green-800">Luxury Copy:</p>
+                                        <p class="text-green-700 italic">A secluded haven nestled along the dramatic Irish coastline. Where time slows, and an aura of elegant tranquility surrounds you.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Search Intent Card -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-2xl font-bold font-display mb-3">Search Intent: Understanding the 'Why'</h3>
+                            <p class="mb-4"><strong class="accent-gold">What it is:</strong> The underlying goal a person has when they type a query into Google. Are they dreaming, comparing, or ready to book?</p>
+                            <p class="mb-4"><strong class="accent-gold">Your Task:</strong> Tailor your copy to match the user's goal. Match the intent to deliver value and build trust.</p>
+                            <div class="bg-gray-50 p-4 rounded-lg space-y-3">
+                                <div class="p-3 border-l-4 border-blue-400 bg-blue-50">
+                                    <p class="font-semibold text-blue-800">Informational ("Dreaming"):</p>
+                                    <p class="text-blue-700">For "best time to visit Ireland," write a helpful guide, not a sales pitch.</p>
+                                </div>
+                                <div class="p-3 border-l-4 border-yellow-400 bg-yellow-50">
+                                    <p class="font-semibold text-yellow-800">Commercial ("Comparing"):</p>
+                                    <p class="text-yellow-700">For "luxury spa hotels near Dublin," highlight unique selling points and persuade.</p>
+                                </div>
+                                 <div class="p-3 border-l-4 border-green-400 bg-green-50">
+                                    <p class="font-semibold text-green-800">Transactional ("Booking"):</p>
+                                    <p class="text-green-700">For "book gilded manor suite," make the process clear, direct, and effortless.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rich Snippets Card -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-2xl font-bold font-display mb-3">Writing for Rich Snippets</h3>
+                            <p class="mb-4"><strong class="accent-gold">What they are:</strong> Enhanced, eye-catching search results like star ratings, event details, or FAQ dropdowns. They make our listing stand out.</p>
+                            <p class="mb-4"><strong class="accent-gold">Your Task:</strong> Structure content in a way that Google can easily understand and convert into a rich snippet. A simple FAQ section is a powerful way to do this.</p>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-bold mb-2">Example FAQ Structure:</h4>
+                                <div class="p-3 border-l-4 border-gray-400 bg-gray-100">
+                                    <p class="font-semibold text-gray-800">Frequently Asked Questions</p>
+                                    <div class="mt-2">
+                                        <p class="font-semibold text-gray-700">What is the dress code for the restaurant?</p>
+                                        <p class="text-gray-600 pl-4">Our restaurant observes a smart casual dress code...</p>
+                                    </div>
+                                    <div class="mt-2">
+                                        <p class="font-semibold text-gray-700">Do you offer valet parking?</p>
+                                        <p class="text-gray-600 pl-4">Yes, complimentary valet parking is available for all our guests...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: The Technical Handshake -->
+                <section id="handshake" class="content-section hidden">
+                    <h2 class="text-4xl font-bold font-display border-b-2 border-accent-gold pb-2 mb-4">The Technical Handshake</h2>
+                    <p class="text-lg text-gray-600 mb-8">These are topics where your writing has a direct impact on the technical side of SEO. You don't need to implement code, but being aware of these concepts helps you avoid common pitfalls.</p>
+
+                     <div class="space-y-8">
+                        <!-- Duplicate Content Card -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-2xl font-bold font-display mb-3">Duplicate & Thin Content</h3>
+                            <p class="mb-4"><strong class="accent-gold">What it is:</strong> Duplicate content is identical text on different pages. Thin content offers little value. Both confuse search engines.</p>
+                            <p class="mb-4"><strong class="accent-gold">Your Task (CRITICAL):</strong> AVOID copy-pasting. Every page, every room description must be unique. Focus on what makes each experience different. Fleshing out every page with rich, descriptive detail avoids thin content.</p>
+                        </div>
+
+                        <!-- Canonical URL Card -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-2xl font-bold font-display mb-3">Canonical URL: The Master Copy</h3>
+                            <p class="mb-4"><strong class="accent-gold">What it is:</strong> A technical tag that tells Google, "Of all the pages with similar content, this one is the original."</p>
+                            <p class="mb-4"><strong class="accent-gold">Your Role:</strong> You don't set this tag, but by writing unique content for every page, you prevent the issue from arising. Your distinct copy naturally defines which page is the "master."</p>
+                        </div>
+                        
+                        <!-- URL Structure Card -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h3 class="text-2xl font-bold font-display mb-3">URL Structure: The Digital Address</h3>
+                            <p class="mb-4"><strong class="accent-gold">What it is:</strong> The web address for the page, e.g., `ourhotel.com/spa/massages`.</p>
+                            <p class="mb-4"><strong class="accent-gold">Your Role:</strong> Your page's H1 title heavily influences the URL. A clear, keyword-focused H1 helps the technical team create a clean, readable URL that both users and search engines can understand.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Visualizing Impact -->
+                <section id="impact" class="content-section hidden">
+                    <h2 class="text-4xl font-bold font-display border-b-2 border-accent-gold pb-2 mb-4">Visualizing Impact</h2>
+                    <p class="text-lg text-gray-600 mb-8">Not all SEO elements carry the same weight. This chart provides a visual guide to where your efforts can have the most impact on search visibility. Focus on the high-impact items first.</p>
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="chart-container">
+                            <canvas id="impactChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Final Checklist -->
+                <section id="checklist" class="content-section hidden">
+                    <h2 class="text-4xl font-bold font-display border-b-2 border-accent-gold pb-2 mb-4">Final Checklist</h2>
+                    <p class="text-lg text-gray-600 mb-8">Use this interactive checklist to confirm your understanding of the core principles. A great page of copy will have all these boxes ticked.</p>
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="space-y-4">
+                            <label class="flex items-center p-3 rounded-md hover:bg-gray-50 transition-colors duration-200">
+                                <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-accent-gold focus:ring-accent-gold">
+                                <span class="ml-3 text-gray-700">Craft one strong, descriptive H1 title per page.</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-md hover:bg-gray-50 transition-colors duration-200">
+                                <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-accent-gold focus:ring-accent-gold">
+                                <span class="ml-3 text-gray-700">Write a unique Meta Title (30-60 chars) and Meta Description (80-155 chars).</span>
+                            </label>
+                             <label class="flex items-center p-3 rounded-md hover:bg-gray-50 transition-colors duration-200">
+                                <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-accent-gold focus:ring-accent-gold">
+                                <span class="ml-3 text-gray-700">Recommend a compelling Open Graph image for social sharing.</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-md hover:bg-gray-50 transition-colors duration-200">
+                                <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-accent-gold focus:ring-accent-gold">
+                                <span class="ml-3 text-gray-700">Write unique, evocative descriptions for every room, service, and page.</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-md hover:bg-gray-50 transition-colors duration-200">
+                                <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-accent-gold focus:ring-accent-gold">
+                                <span class="ml-3 text-gray-700">Describe all important images with descriptive Alt Text.</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-md hover:bg-gray-50 transition-colors duration-200">
+                                <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-accent-gold focus:ring-accent-gold">
+                                <span class="ml-3 text-gray-700">Use H2s and H3s to structure your copy logically.</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-md hover:bg-gray-50 transition-colors duration-200">
+                                <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-accent-gold focus:ring-accent-gold">
+                                <span class="ml-3 text-gray-700">Include natural internal links to other relevant pages.</span>
+                            </label>
+                             <label class="flex items-center p-3 rounded-md hover:bg-gray-50 transition-colors duration-200">
+                                <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-accent-gold focus:ring-accent-gold">
+                                <span class="ml-3 text-gray-700">Ensure the tone is consistently luxurious and evocative.</span>
+                            </label>
+                             <label class="flex items-center p-3 rounded-md hover:bg-gray-50 transition-colors duration-200">
+                                <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-accent-gold focus:ring-accent-gold">
+                                <span class="ml-3 text-gray-700">Structure content (like FAQs) to aim for Rich Snippets.</span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const contentSections = document.querySelectorAll('.content-section');
+    const desktopNavLinks = document.querySelectorAll('#desktop-nav .nav-link');
+    const mobileNav = document.getElementById('mobile-nav');
+
+    function setActiveSection(sectionId) {
+        contentSections.forEach(section => {
+            section.classList.toggle('hidden', section.id !== sectionId);
+        });
+
+        desktopNavLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${sectionId}`);
+        });
+        
+        if (mobileNav.value !== sectionId) {
+            mobileNav.value = sectionId;
+        }
+    }
+
+    desktopNavLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const sectionId = link.getAttribute('href').substring(1);
+            setActiveSection(sectionId);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    mobileNav.addEventListener('change', () => {
+        setActiveSection(mobileNav.value);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Set initial active section
+    setActiveSection('foundation');
+
+    // Interactive Example Toggles
+    const toggleButtons = document.querySelectorAll('.toggle-button');
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetClass = button.dataset.target;
+            const weakExample = document.querySelector(`.example-${targetClass}.weak`);
+            const strongExample = document.querySelector(`.example-${targetClass}.strong`);
+            
+            weakExample.classList.toggle('hidden');
+            strongExample.classList.toggle('hidden');
+            
+            if (strongExample.classList.contains('hidden')) {
+                button.textContent = `Show Strong Example`;
+            } else {
+                button.textContent = `Show Weak Example`;
+            }
+        });
+    });
+
+    // Character Counters
+    const metaTitleInput = document.getElementById('meta-title-input');
+    const metaTitleCounter = document.getElementById('meta-title-counter');
+    const titleFeedbackText = document.getElementById('title-feedback-text');
+    const metaDescInput = document.getElementById('meta-desc-input');
+    const metaDescCounter = document.getElementById('meta-desc-counter');
+    const descFeedbackText = document.getElementById('desc-feedback-text');
+
+    const TITLE_MIN = 30;
+    const TITLE_MAX = 60;
+    const DESC_MIN = 80;
+    const DESC_MAX = 155;
+
+    metaTitleInput.addEventListener('input', () => {
+        const count = metaTitleInput.value.length;
+        metaTitleCounter.textContent = `${count} / ${TITLE_MAX}`;
+        
+        metaTitleInput.classList.remove('border-gray-300', 'border-yellow-500', 'border-green-500', 'border-red-500');
+        titleFeedbackText.classList.remove('text-yellow-600', 'text-green-600', 'text-red-600');
+
+        if (count === 0) {
+            metaTitleInput.classList.add('border-gray-300');
+            titleFeedbackText.textContent = '';
+        } else if (count > 0 && count < TITLE_MIN) {
+            metaTitleInput.classList.add('border-yellow-500');
+            titleFeedbackText.textContent = 'Too short';
+            titleFeedbackText.classList.add('text-yellow-600');
+        } else if (count >= TITLE_MIN && count < TITLE_MAX) {
+            metaTitleInput.classList.add('border-green-500');
+            titleFeedbackText.textContent = 'Good length';
+            titleFeedbackText.classList.add('text-green-600');
+        } else if (count === TITLE_MAX) {
+            metaTitleInput.classList.add('border-red-500');
+            titleFeedbackText.textContent = 'At limit';
+            titleFeedbackText.classList.add('text-red-600');
+        }
+    });
+
+    metaDescInput.addEventListener('input', () => {
+        const count = metaDescInput.value.length;
+        metaDescCounter.textContent = `${count} / ${DESC_MAX}`;
+        
+        metaDescInput.classList.remove('border-gray-300', 'border-yellow-500', 'border-green-500', 'border-red-500');
+        descFeedbackText.classList.remove('text-yellow-600', 'text-green-600', 'text-red-600');
+
+        if (count === 0) {
+            metaDescInput.classList.add('border-gray-300');
+            descFeedbackText.textContent = '';
+        } else if (count > 0 && count < DESC_MIN) {
+            metaDescInput.classList.add('border-yellow-500');
+            descFeedbackText.textContent = 'Too short';
+            descFeedbackText.classList.add('text-yellow-600');
+        } else if (count >= DESC_MIN && count < DESC_MAX) {
+            metaDescInput.classList.add('border-green-500');
+            descFeedbackText.textContent = 'Good length';
+            descFeedbackText.classList.add('text-green-600');
+        } else if (count === DESC_MAX) {
+            metaDescInput.classList.add('border-red-500');
+            descFeedbackText.textContent = 'At limit';
+            descFeedbackText.classList.add('text-red-600');
+        }
+    });
+    
+    // Checklist interaction
+    const checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            checkbox.parentElement.classList.toggle('line-through', checkbox.checked);
+            checkbox.parentElement.classList.toggle('text-gray-400', checkbox.checked);
+        });
+    });
+
+    // Chart.js Impact Chart
+    const impactChartCtx = document.getElementById('impactChart');
+    if(impactChartCtx) {
+        new Chart(impactChartCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Meta Title', 'H1 Tag', 'Content Quality & Tone', 'Internal Linking', 'Meta Description', 'H2/H3 Tags', 'Image Alt Text'],
+                datasets: [{
+                    label: 'Relative SEO Impact',
+                    data: [95, 90, 85, 75, 65, 60, 50],
+                    backgroundColor: [
+                        'rgba(180, 162, 132, 0.8)',
+                        'rgba(180, 162, 132, 0.7)',
+                        'rgba(180, 162, 132, 0.6)',
+                        'rgba(180, 162, 132, 0.5)',
+                        'rgba(180, 162, 132, 0.4)',
+                        'rgba(180, 162, 132, 0.3)',
+                        'rgba(180, 162, 132, 0.2)'
+                    ],
+                    borderColor: 'rgba(180, 162, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#4C4646',
+                        titleFont: { family: 'Cormorant Garamond', size: 16 },
+                        bodyFont: { family: 'Lato', size: 12 },
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                            color: '#F5F1EA'
+                        },
+                        ticks: {
+                            font: { family: 'Lato' }
+                        }
+                    },
+                    y: {
+                         grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: { family: 'Lato', size: 14 }
+                        }
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+
+</body>
+</html>
