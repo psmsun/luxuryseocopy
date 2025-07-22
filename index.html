@@ -17,6 +17,9 @@
         - Report Info: Relative importance of SEO elements -> Goal: Compare -> Viz: Horizontal Bar Chart -> Interaction: Hover for tooltips -> Justification: A visual hierarchy is quicker to understand. -> Library: Chart.js.
         - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Lato', sans-serif;
             background-color: #FDFBF6;
@@ -45,6 +48,9 @@
             margin-right: auto;
             height: 350px;
             max-height: 400px;
+        }
+        .content-section {
+            scroll-margin-top: 2rem;
         }
         @media (max-width: 768px) {
             .chart-container {
@@ -178,7 +184,7 @@
                 </section>
 
                 <!-- Section: Structuring the Narrative -->
-                <section id="narrative" class="content-section hidden">
+                <section id="narrative" class="content-section mt-12">
                     <h2 class="text-4xl font-bold font-display border-b-2 border-accent-gold pb-2 mb-4">Structuring the Narrative</h2>
                     <p class="text-lg text-gray-600 mb-8">Once the foundation is set, you must structure the content on the page. This creates a logical flow for the reader and helps search engines understand the hierarchy of your information.</p>
                     
@@ -247,7 +253,7 @@
                 </section>
 
                 <!-- Section: Mastering the Voice -->
-                <section id="voice" class="content-section hidden">
+                <section id="voice" class="content-section mt-12">
                     <h2 class="text-4xl font-bold font-display border-b-2 border-accent-gold pb-2 mb-4">Mastering the Voice</h2>
                     <p class="text-lg text-gray-600 mb-8">This is where art meets science. Your tone defines the brand, while understanding user intent and content structure ensures your beautiful words reach the right audience at the right time.</p>
 
@@ -316,7 +322,7 @@
                 </section>
 
                 <!-- Section: The Technical Handshake -->
-                <section id="handshake" class="content-section hidden">
+                <section id="handshake" class="content-section mt-12">
                     <h2 class="text-4xl font-bold font-display border-b-2 border-accent-gold pb-2 mb-4">The Technical Handshake</h2>
                     <p class="text-lg text-gray-600 mb-8">These are topics where your writing has a direct impact on the technical side of SEO. You don't need to implement code, but being aware of these concepts helps you avoid common pitfalls.</p>
 
@@ -345,7 +351,7 @@
                 </section>
 
                 <!-- Section: Visualizing Impact -->
-                <section id="impact" class="content-section hidden">
+                <section id="impact" class="content-section mt-12">
                     <h2 class="text-4xl font-bold font-display border-b-2 border-accent-gold pb-2 mb-4">Visualizing Impact</h2>
                     <p class="text-lg text-gray-600 mb-8">Not all SEO elements carry the same weight. This chart provides a visual guide to where your efforts can have the most impact on search visibility. Focus on the high-impact items first.</p>
                     <div class="bg-white rounded-lg shadow-lg p-6">
@@ -356,7 +362,7 @@
                 </section>
 
                 <!-- Section: Final Checklist -->
-                <section id="checklist" class="content-section hidden">
+                <section id="checklist" class="content-section mt-12">
                     <h2 class="text-4xl font-bold font-display border-b-2 border-accent-gold pb-2 mb-4">Final Checklist</h2>
                     <p class="text-lg text-gray-600 mb-8">Use this interactive checklist to confirm your understanding of the core principles. A great page of copy will have all these boxes ticked.</p>
                     <div class="bg-white rounded-lg shadow-lg p-6">
@@ -411,36 +417,50 @@ document.addEventListener('DOMContentLoaded', () => {
     const desktopNavLinks = document.querySelectorAll('#desktop-nav .nav-link');
     const mobileNav = document.getElementById('mobile-nav');
 
-    function setActiveSection(sectionId) {
-        contentSections.forEach(section => {
-            section.classList.toggle('hidden', section.id !== sectionId);
-        });
-
-        desktopNavLinks.forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === `#${sectionId}`);
-        });
-        
-        if (mobileNav.value !== sectionId) {
-            mobileNav.value = sectionId;
-        }
-    }
-
+    // Scroll-to functionality for navigation
     desktopNavLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            const sectionId = link.getAttribute('href').substring(1);
-            setActiveSection(sectionId);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const targetId = link.getAttribute('href');
+            document.querySelector(targetId).scrollIntoView({
+                behavior: 'smooth'
+            });
         });
     });
 
     mobileNav.addEventListener('change', () => {
-        setActiveSection(mobileNav.value);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const targetId = `#${mobileNav.value}`;
+        document.querySelector(targetId).scrollIntoView({
+            behavior: 'smooth'
+        });
     });
 
-    // Set initial active section
-    setActiveSection('foundation');
+    // Scrollspy to highlight active nav link
+    const onScroll = () => {
+        let currentSectionId = '';
+        const scrollPosition = window.scrollY;
+
+        contentSections.forEach(section => {
+            const sectionTop = section.offsetTop - 100; // 100px buffer
+            if (scrollPosition >= sectionTop) {
+                currentSectionId = section.getAttribute('id');
+            }
+        });
+
+        desktopNavLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSectionId}`) {
+                link.classList.add('active');
+            }
+        });
+        
+        if (mobileNav.value !== currentSectionId) {
+            mobileNav.value = currentSectionId;
+        }
+    };
+
+    window.addEventListener('scroll', onScroll);
+    onScroll(); // Run on load to set initial state
 
     // Interactive Example Toggles
     const toggleButtons = document.querySelectorAll('.toggle-button');
